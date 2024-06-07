@@ -1,0 +1,16 @@
+steps:
+  - id: create artifact
+    name: 'alpine:3'
+    args: ['tar', 'czf', 'ctfd-kubectf-plugin.tar.gz', '-C', './src', '.']
+  - id: upload generic artifact
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'gcloud'
+      - 'artifacts'
+      - 'generic'
+      - 'upload'
+      - '--package=ctfd-kubectf-plugin'
+      - '--version=1.0.0'
+      - '--source=ctfd-kubectf-plugin.tar.gz'
+      - '--repository=ctfd-plugins'
+      - '--location=$LOCATION'
