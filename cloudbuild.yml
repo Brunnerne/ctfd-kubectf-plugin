@@ -3,7 +3,7 @@ steps:
     name: 'alpine:3'
     args: ['tar', 'czf', 'ctfd-kubectf-plugin.tar.gz', '-C', './src', '.']
   - id: upload generic artifact
-    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
     args:
       - 'gcloud'
       - 'artifacts'
