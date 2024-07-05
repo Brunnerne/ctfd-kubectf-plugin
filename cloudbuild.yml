@@ -10,7 +10,7 @@ steps:
       - 'generic'
       - 'upload'
       - '--package=ctfd-kubectf-plugin'
-      - '--version=1.0.1'
+      - '--version=1.0.2'
       - '--source=ctfd-kubectf-plugin.tar.gz'
       - '--repository=ctfd-plugins'
       - '--location=$LOCATION'

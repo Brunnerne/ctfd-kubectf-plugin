@@ -97,15 +97,15 @@ function createChallengeLinkElement(data, parent) {
 
         // Add admin bot link if challenge is tagged with bot
         const chalTag = CTFd.lib.$(".challenge-tag").last().text();
-        if (chalTag == "bot") {
+        if (chalTag.startsWith("#")) {
             parent.append(document.createElement("br"))
             let link = document.createElement('a');
             const subdomains = new URL(`https://${data.deployment.host}`).hostname.split('.')
-            const unique = `${subdomains.shift(1)}-bot`;
+            const unique = `${subdomains.shift(1)}-${chalTag.substring(1)}`;
             const host = `https://${unique}.${subdomains.join('.')}`
             link.href =  host;
             link.target = '_blank'
-            link.textContent = "Admin Bot";
+            link.textContent = host;
             parent.append(link);
         }
         
