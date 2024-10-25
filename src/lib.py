@@ -22,6 +22,16 @@ def error(error: Error):
     return {'error': error.type, 'message': error.message}, error.code
 
 @cache.memoize(timeout=120)
+def get_deployments(host, secret, owner_id, admin):
+    aud = urlparse(host).hostname
+    auth = generate_jwt(aud, secret, owner_id, admin)
+    res = requests.get(
+        f'{host}/deployments/',
+        headers={'authorization': f'Bearer {auth}'},
+        timeout=TIMEOUT)
+    return res.json(), res.status_code
+
+@cache.memoize(timeout=120)
 def get_deployment(host, secret, owner_id, admin, challenge):
     aud = urlparse(host).hostname
     auth = generate_jwt(aud, secret, owner_id, admin)
