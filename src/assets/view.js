@@ -101,18 +101,18 @@ function createChallengeLinkElement(data, parent) {
         // TODO: remove this jank and have a proper way to determine how to connect to chals
         parent.append(expires);
         parent.append(document.createElement('br'));
-        if (data.deployment.host.includes("pwn")) {
-            var conn_string = document.createElement('span');
-            conn_string.textContent = `openssl s_client -quiet -connect ${data.deployment.host}:443`
-            parent.append(conn_string);
+        // if (data.deployment.host.includes("pwn")) {
+        //     var conn_string = document.createElement('span');
+        //     conn_string.textContent = `openssl s_client -quiet -connect ${data.deployment.host}:443`
+        //     parent.append(conn_string);
 
-        } else {
-            let link = document.createElement('a');
-            link.href = 'https://' + data.deployment.host;
-            link.textContent = data.deployment.host;
-            link.target = '_blank'
-            parent.append(link);
-        }
+        // } else {
+        let link = document.createElement('a');
+        link.href = 'https://' + data.deployment.host;
+        link.textContent = data.deployment.host;
+        link.target = '_blank'
+        parent.append(link);
+        // }
 
         // Add admin bot link if challenge is tagged with bot
         try {
