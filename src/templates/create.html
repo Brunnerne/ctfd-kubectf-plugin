@@ -13,11 +13,23 @@
 <div class="form-group">
 	<label for="value">Deployment Template Name<br>
 		<small class="form-text text-muted">
-            The key for the deployment template in Cloudstore
+			The key for the deployment template in Cloudstore
 		</small>
 	</label>
 	<input type="text" class="form-control" name="template_name" placeholder="Enter name" required>
 
+</div>
+<div class="form-group">
+	<label for="value">Instance Type<br>
+		<small class="form-text text-muted">
+			The type of instance to deploy. This is used to determine how to connect to the challenge.
+			<ul>
+				<li>tcp: Connect via TCP with TLS</li>
+				<li>web: Connect via HTTPS</li>
+			</ul>
+		</small>
+	</label>
+	<input type="text" class="form-control" name="instance_type" placeholder="Enter type" required>
 </div>
 {% endblock %}
 
@@ -37,8 +49,10 @@
 			<span>How the dynamic value will be calculated based on the Decay value</span>
 			<ul>
 				<li>Linear: Calculated as <code>Initial - (Decay * SolveCount)</code></li>
-				<li>Logarithmic: Calculated as <code>(((Minimum - Initial) / (Decay^2)) * (SolveCount^2)) + Initial</code></li>
-				<li>Logarithmic Custom: Same behaviour as logarithmic, but uses https://www.desmos.com/calculator/k1tiifvn7s </li>
+				<li>Logarithmic: Calculated as
+					<code>(((Minimum - Initial) / (Decay^2)) * (SolveCount^2)) + Initial</code></li>
+				<li>Logarithmic Custom: Same behaviour as logarithmic, but uses
+					https://www.desmos.com/calculator/k1tiifvn7s </li>
 			</ul>
 		</small>
 	</label>
@@ -55,7 +69,8 @@
 			<span>The decay value is used differently depending on the above Decay Function</span>
 			<ul>
 				<li>Linear: The amount of points deducted per solve. Equal deduction per solve.</li>
-				<li>Logarithmic: The amount of solves before the challenge reaches its minimum value. Earlier solves will lose less
+				<li>Logarithmic: The amount of solves before the challenge reaches its minimum value. Earlier solves
+					will lose less
 					points. Later solves will lose more points</li>
 				<li>Logarithmic Custom: The Decay value has <b>NO EFFECT</b> as this is built into the function</li>
 			</ul>

@@ -14,11 +14,22 @@
 <div class="form-group">
 	<label for="template_name">Deployment Template Name<br>
 		<small class="form-text text-muted">
-            The name inside isolated-template.yml
+			The name inside isolated-template.yml
 		</small>
 	</label>
 	<input type="text" class="form-control" name="template_name" value="{{ challenge.template_name }}" required>
-
+</div>
+<div class="form-group">
+	<label for="instance_type">Instance Type<br>
+		<small class="form-text text-muted">
+			The type of instance to deploy. This is used to determine how to connect to the challenge.
+			<ul>
+				<li>tcp: Connect via TCP with TLS</li>
+				<li>web: Connect via HTTPS</li>
+			</ul>
+		</small>
+	</label>
+	<input type="text" class="form-control" name="instance_type" value="{{ challenge.instance_type }}" required>
 </div>
 {% endblock %}
 
@@ -47,15 +58,18 @@
 			<span>How the dynamic value will be calculated based on the Decay value</span>
 			<ul>
 				<li>Linear: Calculated as <code>Initial - (Decay * SolveCount)</code></li>
-				<li>Logarithmic: Calculated as <code>(((Minimum - Initial) / (Decay^2)) * (SolveCount^2)) + Initial</code></li>
-				<li>Logarithmic Custom: Same behaviour as logarithmic, but uses https://www.desmos.com/calculator/k1tiifvn7s </li>
+				<li>Logarithmic: Calculated as
+					<code>(((Minimum - Initial) / (Decay^2)) * (SolveCount^2)) + Initial</code></li>
+				<li>Logarithmic Custom: Same behaviour as logarithmic, but uses
+					https://www.desmos.com/calculator/k1tiifvn7s </li>
 			</ul>
 		</small>
 	</label>
 	<select name="function" class="custom-select">
-		<option value="linear" {% if challenge.function == "linear" %}selected{% endif %}>Linear</option>
-		<option value="logarithmic" {% if challenge.function == "logarithmic" %}selected{% endif %}>Logarithmic</option>
-		<option value="logarithmic_custom" {% if challenge.function == "logarithmic_custom" %}selected{% endif %}>Logarithmic Custom</option>
+		<option value="linear" {% if challenge.function=="linear" %}selected{% endif %}>Linear</option>
+		<option value="logarithmic" {% if challenge.function=="logarithmic" %}selected{% endif %}>Logarithmic</option>
+		<option value="logarithmic_custom" {% if challenge.function=="logarithmic_custom" %}selected{% endif %}>
+			Logarithmic Custom</option>
 	</select>
 </div>
 
@@ -65,7 +79,8 @@
 			<span>The decay value is used differently depending on the above Decay Function</span>
 			<ul>
 				<li>Linear: The amount of points deducted per solve. Equal deduction per solve.</li>
-				<li>Logarithmic: The amount of solves before the challenge reaches its minimum value. Earlier solves will lose less points. Later solves will lose more points</li>
+				<li>Logarithmic: The amount of solves before the challenge reaches its minimum value. Earlier solves
+					will lose less points. Later solves will lose more points</li>
 				<li>Logarithmic Custom: The Decay value has <b>NO EFFECT</b> as this is built into the function</li>
 			</ul>
 		</small>

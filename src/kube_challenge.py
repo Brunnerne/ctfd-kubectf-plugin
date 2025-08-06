@@ -17,6 +17,7 @@ class KubeChallenge(Challenges):
                    db.ForeignKey("challenges.id", ondelete="CASCADE"),
                    primary_key=True)
     template_name = db.Column(db.String(255), index=False, default="")
+    instance_type = db.Column(db.String(255), index=False, default="")
 
     initial = db.Column(db.Integer, default=0)
     minimum = db.Column(db.Integer, default=0)
@@ -26,6 +27,7 @@ class KubeChallenge(Challenges):
     def __init__(self, *args, **kwargs):
         super(KubeChallenge, self).__init__(**kwargs)
         self.template_name = kwargs["template_name"]
+        self.instance_type = kwargs["instance_type"]
         self.value = kwargs["initial"]
 
 
@@ -66,6 +68,7 @@ class KubeChallengeType(DynamicValueChallenge):
             "decay": challenge.decay,
             "minimum": challenge.minimum,
             "template_name": challenge.template_name,
+            "instance_type": challenge.instance_type,
             "description": challenge.description,
             "category": challenge.category,
             "state": challenge.state,
