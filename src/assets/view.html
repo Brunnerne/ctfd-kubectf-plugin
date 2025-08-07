@@ -15,12 +15,12 @@
 				<button onclick="createDeployment(this)" data-deployment="{{ challenge.template_name | safe }}"
 					data-type="{{ challenge.instance_type | safe }}"
 					class="create-chal btn btn-primary d-none">
-					<small style="color:white;"><i class="fas"></i> Fetch Instance</small>
+					<small style="color:white;"><i class="fas"></i> Start Challenge</small>
 				</button>
 				<button onclick="extendDeployment(this)" data-deployment="{{ challenge.template_name | safe }}"
 					data-type="{{ challenge.instance_type | safe }}"
 					class='extend-chal btn btn-info d-none'>
-					<small style='color:white;'><i class="fas"></i> Extend Expiry</small>
+					<small style='color:white;'><i class="fas"></i> Extend Challenge</small>
 				</button>
 				<!-- <button onclick="resetDeployment(this)" data-deployment="{{ challenge.template_name | safe }}"
 			class='btn btn-warning'>
@@ -29,7 +29,7 @@
 				<button onclick="terminateDeployment(this)" data-deployment="{{ challenge.template_name | safe }}"
 					data-type="{{ challenge.instance_type | safe }}"
 					class='terminate-chal btn btn-danger d-none'>
-					<small style='color:white;'><i class="fas"></i> Terminate</small>
+					<small style='color:white;'><i class="fas"></i> Terminate Challenge</small>
 				</button>
 			</span>
 		</div>
