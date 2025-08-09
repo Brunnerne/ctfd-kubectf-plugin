@@ -100,39 +100,49 @@ function createChallengeLinkElement(data, parent) {
 		var expires = document.createElement('span');
 		expires.textContent = "Expires in " + calculateExpiry(new Date(data.deployment.expires)) + " minutes.";
 
-		// TODO: remove this jank and have a proper way to determine how to connect to chals
 		parent.append(expires);
 		parent.append(document.createElement('br'));
-		if (type === "tcp") {
-			var conn_string = document.createElement('span');
-			conn_string.textContent = `ncat --ssl ${data.deployment.host} 443`
-			parent.append(conn_string);
-		} else {
-			let link = document.createElement('a');
-			link.href = 'https://' + data.deployment.host;
-			link.textContent = data.deployment.host;
-			link.target = '_blank'
-			parent.append(link);
+
+		// Split type (format: <type>:<sub1>,<sub2>,<type>:<sub3>,<sub4>,...)
+		var typeParts = type.split(',');
+		let currentType = "none";
+		if (typeParts.length === 1 && !typeParts[0].includes(':')) {
+			currentType = typeParts[0].toLowerCase().trim();
+			typeParts = [currentType + ':'];
+		}
+		let types = [];
+		for (let i = 0; i < typeParts.length; i++) {
+			if (typeParts[i].includes(':')) {
+				let group = typeParts[i].split(':');
+				currentType = group[0].toLowerCase().trim();
+				typeParts[i] = group[1].trim();
+			}
+			types.push({ type: currentType, subdomains: typeParts[i]});
 		}
 
-		// Add admin bot link if challenge is tagged with bot
-		try {
-			const chalTag = document.querySelector(".challenge-tag").textContent;
-			if (chalTag.startsWith("#")) {
-				parent.append(document.createElement("br"))
+		types.forEach((typeObj, index, array) => {
+			let type = typeObj.type.toLowerCase().trim();
+			let prefix = typeObj.subdomains ?? '';
+			if (prefix.length > 0) {
+				prefix += "-";
+			}
+			if (type === "tcp") {
+				var conn_string = document.createElement('span');
+				conn_string.textContent = `ncat --ssl ${prefix}${data.deployment.host} 443`
+				parent.append(conn_string);
+			} else {
 				let link = document.createElement('a');
-				const subdomains = new URL(`https://${data.deployment.host}`).hostname.split('.')
-				const unique = `${subdomains.shift(1)}-${chalTag.substring(1)}`;
-				const host = `https://${unique}.${subdomains.join('.')}`
-				link.href = host;
+				link.href = 'https://' + prefix + data.deployment.host;
+				link.textContent = prefix + data.deployment.host;
 				link.target = '_blank'
-				link.textContent = host;
 				parent.append(link);
 			}
-		} catch (error) {
 
-		}
-
+			if (index < array.length - 2) {
+				parent.append(document.createElement('br'));
+				parent.append(document.createElement('br'));
+			}
+		});
 	}
 }
 
