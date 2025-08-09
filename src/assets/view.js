@@ -138,7 +138,7 @@ function createChallengeLinkElement(data, parent) {
 				parent.append(link);
 			}
 
-			if (index < array.length - 2) {
+			if (index < array.length - 1) {
 				parent.append(document.createElement('br'));
 				parent.append(document.createElement('br'));
 			}
