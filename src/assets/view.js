@@ -54,6 +54,9 @@ function handleErrorResponse(response, alert, btn) {
 	if (response.status === 429) {
 		alert.append("Slow down! You are too fast. Try again in 1 minute.");
 		alert.classList.add("alert-danger");
+	} else if (response.status != 403) {
+		alert.append("Maximum active deployments reached. Please terminate some challenges.");
+		alert.classList.add("alert-danger");
 	} else if (response.status >= 400 && response.status != 404) {
 		alert.append(response.error || response.message || "An error occurred while processing the challenge.");
 		alert.classList.add("alert-danger");
