@@ -52,8 +52,8 @@ def get_config_secret(default=None):
 @blueprint.route('/api/kube_ctf/', methods=['GET'])
 @bypass_csrf_protection
 @during_ctf_time_only
-@ratelimit(method='GET', limit=1500, interval=60, key_prefix='rl_kctfget')
-@ratelimit(method='POST', limit=400, interval=60, key_prefix='rl_kctfpost')
+@ratelimit(method='GET', limit=60, interval=60, key_prefix='rl_kctfget')
+@ratelimit(method='POST', limit=6, interval=60, key_prefix='rl_kctfpost')
 def get_challenges():
     session = get_current_user()
 
@@ -84,8 +84,8 @@ def get_challenges():
 @blueprint.route('/api/kube_ctf/<challenge>', methods=['GET', 'POST'])
 @bypass_csrf_protection
 @during_ctf_time_only
-@ratelimit(method='GET', limit=1500, interval=60, key_prefix='rl_kctfget')
-@ratelimit(method='POST', limit=400, interval=60, key_prefix='rl_kctfpost')
+@ratelimit(method='GET', limit=60, interval=60, key_prefix='rl_kctfget')
+@ratelimit(method='POST', limit=10, interval=60, key_prefix='rl_kctfpost')
 def get_challenge(challenge):
     session = get_current_user()
 
